@@ -134,3 +134,15 @@ def add_logging_options(parser: argparse.ArgumentParser):
         dest="loglevel",
         const=logging.WARNING,
     )
+
+
+def add_sender_id_param(
+    parser: Union[argparse.ArgumentParser, argparse._ActionsContainer],
+    default: Text,
+):
+    parser.add_argument(
+        "--sender_id",
+        type=str,
+        default=default,
+        help="The sender id to use when interacting with your bot.",
+    )

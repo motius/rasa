@@ -1400,7 +1400,7 @@ async def record_messages(
         raise
 
 
-def _serve_application(app, stories, skip_visualization):
+def _serve_application(app, stories, skip_visualization, sender_id):
     """Start a core server and attach the interactive learning IO."""
 
     endpoint = EndpointConfig(url=DEFAULT_SERVER_URL)
@@ -1412,7 +1412,7 @@ def _serve_application(app, stories, skip_visualization):
             endpoint=endpoint,
             stories=stories,
             skip_visualization=skip_visualization,
-            sender_id=uuid.uuid4().hex,
+            sender_id=sender_id,
         )
 
         logger.info("Killing Sanic server now.")
@@ -1504,6 +1504,7 @@ async def wait_til_server_is_running(endpoint, max_retries=30, sleep_between_ret
 def run_interactive_learning(
     stories: Text = None,
     skip_visualization: bool = False,
+    sender_id: Text = UserMessage.DEFAULT_SENDER_ID,
     server_args: Dict[Text, Any] = None,
     additional_arguments: Dict[Text, Any] = None,
 ):
@@ -1543,7 +1544,7 @@ def run_interactive_learning(
             "before_server_start",
         )
 
-    _serve_application(app, stories, skip_visualization)
+    _serve_application(app, stories, skip_visualization, sender_id)
 
     if not skip_visualization and p is not None:
         p.terminate()

@@ -70,6 +70,7 @@ def configure_app(
     port: int = constants.DEFAULT_SERVER_PORT,
     endpoints: Optional[AvailableEndpoints] = None,
     log_file: Optional[Text] = None,
+    sender_id: Optional[Text] = None,
 ):
     """Run the agent."""
     from rasa import server
@@ -109,7 +110,8 @@ def configure_app(
             """Small wrapper to shut down the server once cmd io is done."""
             await asyncio.sleep(1)  # allow server to start
             await console.record_messages(
-                server_url=constants.DEFAULT_SERVER_FORMAT.format(port)
+                server_url=constants.DEFAULT_SERVER_FORMAT.format(port),
+                sender_id=sender_id
             )
 
             logger.info("Killing Sanic server now.")
@@ -133,6 +135,7 @@ def serve_application(
     endpoints: Optional[AvailableEndpoints] = None,
     remote_storage: Optional[Text] = None,
     log_file: Optional[Text] = None,
+    sender_id: Optional[Text] = None,
 ):
     if not channel and not credentials:
         channel = "cmdline"
@@ -149,6 +152,7 @@ def serve_application(
         port=port,
         endpoints=endpoints,
         log_file=log_file,
+        sender_id=sender_id,
     )
 
     logger.info(

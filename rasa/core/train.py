@@ -158,6 +158,7 @@ def do_interactive_learning(cmdline_args, stories, additional_arguments=None):
     interactive.run_interactive_learning(
         stories,
         skip_visualization=cmdline_args.skip_visualization,
+        sender_id=cmdline_args.sender_id,
         server_args=cmdline_args.__dict__,
         additional_arguments=additional_arguments,
     )
