@@ -1,9 +1,11 @@
 import argparse
+import uuid
 
 from rasa.cli.arguments.default_arguments import (
     add_domain_param,
     add_stories_param,
     add_model_param,
+    add_sender_id_param,
     add_endpoint_param,
 )
 from rasa.cli.arguments.train import (
@@ -27,6 +29,7 @@ def set_interactive_arguments(parser: argparse.ArgumentParser):
         parser,
         help_text="Configuration file for the model server and the connectors as a yml file.",
     )
+    add_sender_id_param(parser, uuid.uuid4().hex)
 
     train_arguments = parser.add_argument_group("Train Arguments")
     add_config_param(train_arguments)
@@ -50,6 +53,7 @@ def set_interactive_core_arguments(parser: argparse.ArgumentParser):
         parser,
         help_text="Configuration file for the model server and the connectors as a yml file.",
     )
+    add_sender_id_param(parser, uuid.uuid4().hex)
 
     train_arguments = parser.add_argument_group("Train Arguments")
     add_config_param(train_arguments)
